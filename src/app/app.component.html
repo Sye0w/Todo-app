@@ -1,6 +1,11 @@
 <body class="w-full min-h-screen p-0 m-0 border-box font-josefin">
-  <div class="bg-[#fff] w-full">
-    <!-- <img alt="../assets/images"/> -->
-
+  <div class="w-full h-screen grid grid-rows-[40%_60%] ">
+    <img [src]="imgMode"  alt=""/>
+    <div [class]="isDarkTheme ? 'bg-[#000]' : 'bg-[#fff]'" >
+    </div>
+    <div class="z-[999] absolute inset-0">
+      <app-header></app-header>
+      <app-todo></app-todo>
+    </div>
   </div>
-</body>  
+</body>

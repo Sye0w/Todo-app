@@ -1,11 +1,11 @@
 <body class="w-full min-h-screen p-0 m-0 border-box font-josefin">
-  <div class="w-full h-screen grid grid-rows-[40%_60%] ">
+  <div class="w-full h-screen grid grid-rows-[35%_65%] transition">
     <img [src]="imgMode"  alt=""/>
     <div [class]="isDarkTheme ? 'bg-[#000]' : 'bg-[#fff]'" >
     </div>
-    <div class="z-[999] absolute inset-0">
+    <section class="z-[999] absolute inset-0 w-[33.75rem] flex flex-col border mx-auto mt-[4.375rem]">
       <app-header></app-header>
       <app-todo></app-todo>
-    </div>
+    </section>
   </div>
 </body>

@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     this.store.pipe(select(selectTheme)).subscribe(theme => {
       this.isDarkTheme = theme;
-      console.log(this.isDarkTheme)
     })
   }
 

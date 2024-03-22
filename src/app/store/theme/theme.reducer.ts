@@ -6,10 +6,14 @@ export interface Theme {
 }
 
 const initialState: Theme = {
-  isDarkTheme: true
+  isDarkTheme: localStorage.getItem('isDarkTheme') === 'true' ? true : false,
 } 
 
 export const themeReducer = createReducer(
   initialState,
-  on(toggleTheme, (state)=> ({ ...state, isDarkTheme: !state.isDarkTheme}))
+  on(toggleTheme, (state)=>{ 
+    const isDarkTheme = !state.isDarkTheme;
+    localStorage.setItem('isDarkTheme', `${isDarkTheme}`);
+    return {state, isDarkTheme } 
+  })
 );

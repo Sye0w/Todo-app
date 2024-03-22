@@ -1,3 +1,12 @@
-<header>
-aervaer
+<header class="flex justify-between text-[#fff] items-center transition-all">
+ <h1 class="font-bold text-[2.5rem] tracking-[0.9375rem]">TODO</h1>
+ <div>
+  <button *ngIf="isDarkMode" (click)="toggleTheme()" [class]="isDarkMode ? 'block':'hidden'" class="animate-wiggle">
+    <img src='../assets/images/icon-sun.svg' alt="sun-icon"/>
+  </button>
+  <button ng-else (click)="toggleTheme()" [class]="isDarkMode ? 'hidden':'block'" class="animate-wiggle">
+    <img src='../assets/images/icon-moon.svg' alt="moon-icon"/>
+  </button>
+ </div>
+ <!-- <img [src]="mode" alt="mode-icon" class="w-[1.5625rem] h-[1.5625rem] cursor-pointer animate-wiggle" (click)="toggleTheme()"/> -->
 </header>

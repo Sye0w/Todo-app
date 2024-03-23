@@ -1,9 +1,33 @@
-<main>
-   <section class="flex gap-2 p-6 w-full h-[4rem] text-[1.125rem] rounded-[0.3125rem] items-center" [class]="isDarkMode ? 'bg-[#25273D]': 'bg-[#fff]'">
-      <div class="w-6 h-6 border rounded-full" (click)="toggleRadio()">
-        <div class="w-full h-full rounded-full "></div>
+<main class="flex flex-col gap-y-[2.5rem]">
+  <section class="flex gap-4 p-6 w-full h-[4rem] text-[1.125rem] rounded-[0.3125rem] items-center shadow-xl" [class]="isDarkMode ? 'bg-[#25273D]': 'bg-[#fff]'">
+    <div class="w-6 h-6 border rounded-full" [class]="radioVisible ? 'hidden':'block'" (click)="toggleRadio()">
+    </div>
+    <input type="text" title="text" [(ngModel)]="todoInput" placeholder="Create new todo..." [class]="isDarkMode ? 'text-[#767992] placeholder:text-[#767992] bg-[#25273D]':'text-[#9495A5] placeholder:text-[#9495A5] bg-[#fff]'" class="focus:outline-none w-full" (keyup.enter)="addTodo()"/>
+  </section>
+  <section class="flex flex-col shadow-xl rounded-[0.375rem]" [class]="isDarkMode ? 'bg-[#25273D]':'bg-[#fff]'">
+    <ul class="children:p-4">
+      <li class="flex gap-4 border-b" *ngFor="let todo of todos">
+        <div>
+          <div *ngIf="todo.active"   class="w-6 h-6 border rounded-full" [class]="radioVisible ? 'hidden':'block'" (click)="toggleRadio()" (click)="updateTodo(todo)">
+          </div>
+          <div class="w-6 h-6 rounded-full bg-gradient-to-r from-[#55DDFF] to-[#C058F3]" ng-else [class]="radioVisible ? 'block':'hidden'" (click)="toggleRadio()" (click)="updateTodo(todo)">
+          </div>
+        </div>
+        <h3 [class]="{'line-through text-[#D1D2DA]' : todo.completed,'text-[#C8CBE7]': isDarkMode,'text-[#494C6B]': true }">{{ todo.text }}</h3>
+      </li>
+    </ul>
+    <div class="flex p-4 text-[#9495A5] text-[0.875rem]  justify-between">
+      <div >
+        <h3 *ngIf="todos.length">{{ todos.length }} items left</h3>
+        <h3 ng-else>no items left</h3>
       </div>
-      <input type="text" title="text" [(ngModel)]="todoInput" placeholder="Create new todo..." [class]="isDarkMode ? 'text-[#767992] placeholder:text-[#767992] bg-[#25273D]':'text-[#949565] placeholder:text-[#949565] bg-[#fff]'" class="focus:outline-none w-full"/>
-   </section>
-   <section></section>
+      <div class="flex font-bold gap-2">
+        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'all' }" (click)="filter = 'all'">All</h3>
+        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'active' }" (click)="filter = 'active'">Active</h3>
+        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'completed' }" (click)="filter = 'completed'">Completed</h3>
+      </div>
+      <p (click)="clearCompleted()">Clear Completed</p>
+    </div>
+  </section>
+  <p class=" mx-auto" [class]="isDarkMode ? 'text-[#5B5E7E]':'text-[#9495A5]'">Drag and drop to reorder list</p>
 <main>

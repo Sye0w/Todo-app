@@ -14,7 +14,10 @@ import { AppState } from '../store/index'
 export class TodoComponent implements OnInit {
   todoInput: string = '';
   isDarkMode: boolean;
-  radioVisible: boolean
+  radioVisible: boolean = false;
+  sortCheck: boolean = false;
+
+  //TodoProps 
   active: boolean = true;
   completed: boolean = false;
   todos: Todo[] = [];
@@ -28,6 +31,7 @@ export class TodoComponent implements OnInit {
     this.store.pipe(select(selectTheme)).subscribe(
       (theme) => this.isDarkMode = theme
     )
+    this.sortTodos()
   }
 
   //filter todos feat
@@ -71,4 +75,11 @@ export class TodoComponent implements OnInit {
   clearCompleted(){
     this.store.dispatch(clearCompleted())
   }
+
+  //RadioGradientToggler
+  toggleRadio(){
+    return this.radioVisible = !this.radioVisible
+  }
+
+
 }

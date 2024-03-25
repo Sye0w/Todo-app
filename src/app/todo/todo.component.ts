@@ -14,7 +14,6 @@ import { AppState } from '../store/index'
 export class TodoComponent implements OnInit {
   todoInput: string = '';
   isDarkMode: boolean;
-  radioVisible: boolean = false;
   sortCheck: boolean = false;
 
   //TodoProps 
@@ -22,6 +21,7 @@ export class TodoComponent implements OnInit {
   completed: boolean = false;
   todos: Todo[] = [];
   filter: 'all' | 'active' | 'completed' = 'all';
+  radioVisibility: boolean[] = [];
 
   constructor( private store: Store<AppState>){
     this.isDarkMode = false
@@ -38,15 +38,28 @@ export class TodoComponent implements OnInit {
   sortTodos() {
     switch (this.filter) {
       case 'all':
-        this.store.pipe(select(selectAllTodos)).subscribe((allTodos) => (this.todos = allTodos))
+        this.store.pipe(select(selectAllTodos)).subscribe((allTodos) => {
+          this.todos = allTodos;
+          this.initializeRadioVisibility();
+        });
         break;
       case 'active':
-        this.store.pipe(select(selectActiveTodos)).subscribe((activeTodos) => ( this.todos = activeTodos))
+        this.store.pipe(select(selectActiveTodos)).subscribe((activeTodos) => {
+          this.todos = activeTodos;
+          this.initializeRadioVisibility();
+        });
         break;
       case 'completed':
-        this.store.pipe(select(selectCompletedTodos)).subscribe((completedTodos) => (this.todos = completedTodos))
+        this.store.pipe(select(selectCompletedTodos)).subscribe((completedTodos) => {
+          this.todos = completedTodos;
+          this.initializeRadioVisibility();
+        });
         break;
     }
+  }
+
+  initializeRadioVisibility() {
+    this.radioVisibility = Array(this.todos.length).fill(false);
   }
 
   selectSort(filter: 'all' | 'active' | 'completed') {
@@ -56,6 +69,10 @@ export class TodoComponent implements OnInit {
 
   //store actions
   addTodo(){
+    const trimmedInput = this.todoInput.trim();
+    if(!trimmedInput){
+      return;
+    }
     this.store.dispatch(addTodo({ 
       text: this.todoInput, 
       active: this.active,
@@ -77,9 +94,7 @@ export class TodoComponent implements OnInit {
   }
 
   //RadioGradientToggler
-  toggleRadio(){
-    return this.radioVisible = !this.radioVisible
+  toggleRadio(i: number ) {
+    this.radioVisibility[i] = !this.radioVisibility[i];
   }
-
-
 }

@@ -16,7 +16,7 @@ import { addTodo,clearCompleted,updateTodo  } from './todo.actions'
   todos: [],
  }
 
- export const todosReducer = createReducer(
+  export const todosReducer = createReducer(
     initialState,
     on(addTodo, (state, { text, active, completed }) => ({
       ...state,
@@ -27,7 +27,7 @@ import { addTodo,clearCompleted,updateTodo  } from './todo.actions'
     })),
     on(updateTodo, (state,payload) => ({
       ...state,
-      todos: state.todos.map(todo => 
+      todos: state.todos.map(todo =>
         todo.id === payload.id ?
         { ...todo, active: payload.active, completed: payload.completed }
         : todo

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store,select } from '@ngrx/store';
-import { addTodo, clearCompleted, updateTodo } from '../store/todo/todo.actions'
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { addTodo, clearCompleted, updateTodo, reorderTodo } from '../store/todo/todo.actions'
 import { selectAllTodos, selectActiveTodos, selectCompletedTodos } from '../store/todo/todo.selectors'
 import { selectTheme } from '../store/theme/theme.selector'
 import { Todo } from '../store/todo/todo.reducer'
@@ -96,5 +97,12 @@ export class TodoComponent implements OnInit {
   //RadioGradientToggler
   toggleRadio(i: number ) {
     this.radioVisibility[i] = !this.radioVisibility[i];
+  }
+
+  //drag-drop feature
+  drop(event: CdkDragDrop<Todo[]>) {
+    const reorderedTodos = [...this.todos];
+    moveItemInArray(reorderedTodos, event.previousIndex, event.currentIndex);
+    this.store.dispatch(reorderTodo({ todos: reorderedTodos })); 
   }
 }

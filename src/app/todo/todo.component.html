@@ -2,11 +2,11 @@
   <section class="flex gap-4 p-4 w-full h-[4rem] text-[1.125rem] rounded-[0.3125rem] items-center shadow-xl" [class]="isDarkMode ? 'bg-[#25273D]': 'bg-[#fff]'">
     <div class="w-6 h-6 border rounded-full" >
     </div>
-    <input type="text" title="text" [(ngModel)]="todoInput" placeholder="Create new todo..." [class]="isDarkMode ? 'text-[#767992] placeholder:text-[#767992] bg-[#25273D]':'text-[#9495A5] placeholder:text-[#9495A5] bg-[#fff]'" class="focus:outline-none w-full" (keyup.enter)="addTodo()"/>
+    <input type="text" title="text" type="text" [(ngModel)]="todoInput" placeholder="Create new todo..." [class]="isDarkMode ? 'text-[#767992] placeholder:text-[#767992] bg-[#25273D]':'text-[#9495A5] placeholder:text-[#9495A5] bg-[#fff]'" class="focus:outline-none w-full" (keyup.enter)="addTodo()"/>
   </section>
   <section class="flex flex-col shadow-xl rounded-[0.375rem]" [class]="isDarkMode ? 'bg-[#25273D]':'bg-[#fff]'">
-    <ul class="children:p-4">
-      <li class="flex gap-4 border-b w-full" *ngFor="let todo of todos;  let i = index">
+    <ul cdkDropList (cdkDropListDropped)="drop($event)"  class="children:p-4">
+      <li cdkDrag  class="flex gap-4 border-b w-full" *ngFor="let todo of todos;  let i = index" >
         <div>
           <div *ngIf="todo.active; else complete"   class="w-6 h-6 border rounded-full " [class]="radioVisibility[i] ? 'hidden':'block'" (click)="toggleRadio(i); updateTodo(todo)" >
           </div>

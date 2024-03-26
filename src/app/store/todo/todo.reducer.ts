@@ -1,5 +1,5 @@
 import { createReducer,on } from '@ngrx/store'
-import { addTodo,clearCompleted,updateTodo  } from './todo.actions'
+import { addTodo,clearCompleted,updateTodo,reorderTodo  } from './todo.actions'
 
  export interface Todo {
   id: number,
@@ -36,5 +36,9 @@ import { addTodo,clearCompleted,updateTodo  } from './todo.actions'
     on(clearCompleted, (state) => ({
       ...state,
       todos: state.todos.filter((todo) => !todo.completed)
+    })),
+    on(reorderTodo, (state, {todos}) => ({
+      ...state,
+      todos
     }))
  )

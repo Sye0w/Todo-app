@@ -18,7 +18,7 @@ import { addTodo,clearCompleted,updateTodo,reorderTodo  } from './todo.actions'
 
   export const todosReducer = createReducer(
     initialState,
-    on(addTodo, (state, { text, active, completed }) => ({
+    on(addTodo, (state, { text: string; active: boolean; completed: boolean }) => ({
       ...state,
       todos: [
         ...state.todos,
@@ -35,9 +35,9 @@ import { addTodo,clearCompleted,updateTodo,reorderTodo  } from './todo.actions'
     })),
     on(clearCompleted, (state) => ({
       ...state,
-      todos: state.todos.filter((todo) => !todo.completed)
+      todos: state.todos.filter((todo: Todo) => !todo.completed)
     })),
-    on(reorderTodo, (state, {todos}) => ({
+    on(reorderTodo, (state, { todos }: { todos: Todo[]) => ({
       ...state,
       todos
     }))

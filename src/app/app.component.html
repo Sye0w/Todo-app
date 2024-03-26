@@ -1,9 +1,9 @@
-<body class="w-full min-h-screen p-0 m-0 border-box font-josefin ">
-  <div class="grid grid-rows-[16.75rem_31rem] h-full mobile:w-full ">
+<body [class]="isDarkTheme ? 'bg-[#000]' : 'bg-[#fff]'"  class="w-full min-h-screen p-0 m-0 border-box font-josefin ">
+  <div class="grid grid-rows-[16.75rem_31rem] h-screen mobile:w-full ">
     <section style.backgroundImage="url({{ imgMode }})" >
       <app-header></app-header>
     </section>
-    <section [class]="isDarkTheme ? 'bg-[#000]' : 'bg-[#fff]'"  >
+    <section  class="h-full" >
       <app-todo></app-todo>
     </section>
   </div>

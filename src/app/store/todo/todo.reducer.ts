@@ -1,5 +1,6 @@
-import { createReducer,on } from '@ngrx/store'
+import { createReducer,on, Action } from '@ngrx/store'
 import { addTodo,clearCompleted,updateTodo,reorderTodo  } from './todo.actions'
+import { LocalStorageConfig, localStorageSync } from 'ngrx-store-localstorage'
 
   export interface Todo {
    id: number,
@@ -12,11 +13,17 @@ import { addTodo,clearCompleted,updateTodo,reorderTodo  } from './todo.actions'
    todos: Todo[]
   }
 
+  const storageConfig: LocalStorageConfig = {
+    keys: ['todos'],
+    rehydrate: true,
+    storage: localStorage
+  }
+
   const initialState: TodoState = {
    todos: [],
   }
 
-  export const todosReducer = createReducer(
+  const todosReducerFunction = createReducer(
   initialState,
   on(addTodo, (state, { text, active = true, completed = false }) => ({
     ...state,
@@ -41,5 +48,9 @@ import { addTodo,clearCompleted,updateTodo,reorderTodo  } from './todo.actions'
     ...state,
     todos,
   })),
+  // localStorageSync(storageConfig)
 );
 
+export const todosReducer = (state: TodoState | undefined, action: Action) => {
+  return localStorageSync(storageConfig)(todosReducerFunction)(state, action)
+}

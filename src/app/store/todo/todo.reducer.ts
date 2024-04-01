@@ -24,31 +24,30 @@ import { LocalStorageConfig, localStorageSync } from 'ngrx-store-localstorage'
   }
 
   const todosReducerFunction = createReducer(
-  initialState,
-  on(addTodo, (state, { text, active = true, completed = false }) => ({
-    ...state,
-    todos: [
-      ...state.todos,
-      { id: Date.now(), text, active, completed },
-    ],
-  })),
-  on(updateTodo, (state, payload) => ({
-    ...state,
-    todos: state.todos.map((todo: Todo) =>
-      todo.id === payload.id
-        ? { ...todo, active: payload.active, completed: payload.completed }
-        : todo
-    ),
-  })),
-  on(clearCompleted, (state) => ({
-    ...state,
-    todos: state.todos.filter((todo: Todo) => !todo.completed),
-  })),
-  on(reorderTodo, (state, { todos }) => ({
-    ...state,
-    todos,
-  })),
-  // localStorageSync(storageConfig)
+    initialState,
+    on(addTodo, (state, { text, active = true, completed = false }) => ({
+      ...state,
+      todos: [
+        ...state.todos,
+        { id: Date.now(), text, active, completed },
+      ],
+    })),
+    on(updateTodo, (state, payload) => ({
+      ...state,
+      todos: state.todos.map((todo: Todo) =>
+        todo.id === payload.id
+          ? { ...todo, active: payload.active, completed: payload.completed }
+          : todo
+      ),
+    })),
+    on(clearCompleted, (state) => ({
+      ...state,
+      todos: state.todos.filter((todo: Todo) => !todo.completed),
+    })),
+    on(reorderTodo, (state, { todos }) => ({
+      ...state,
+      todos,
+    })),
 );
 
 export const todosReducer = (state: TodoState | undefined, action: Action) => {

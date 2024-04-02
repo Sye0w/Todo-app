@@ -16,7 +16,10 @@
             </div>
           </ng-template>
         </div>
-        <h3 [ngClass]="{'line-through text-[#D1D2DA]' : todo.completed,'text-[#C8CBE7]': isDarkMode,'text-[#494C6B] w-full': true }">{{ todo.text }}</h3>
+        <h3 [class.line-through]="todo.completed" [class.text-[#D1D2DA]]="todo.completed"
+            [class.text-[#C8CBE7]]="isDarkMode" [class.text-[#494C6B]]="true">
+            {{ todo.text }}
+        </h3>
       </li>
     </ul>
 

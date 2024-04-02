@@ -17,7 +17,7 @@ export class TodoComponent implements OnInit {
   isDarkMode: boolean;
   sortCheck: boolean = false;
 
-  //TodoProps 
+  //TodoProps
   active: boolean = true;
   completed: boolean = false;
   todos: Todo[] = [];
@@ -74,8 +74,8 @@ export class TodoComponent implements OnInit {
     if(!trimmedInput){
       return;
     }
-    this.store.dispatch(addTodo({ 
-      text: this.todoInput, 
+    this.store.dispatch(addTodo({
+      text: this.todoInput,
       active: this.active,
       completed: this.completed
     }))
@@ -100,9 +100,9 @@ export class TodoComponent implements OnInit {
   }
 
   //drag-drop feature
-  drop(event: CdkDragDrop<Todo[]>) {
+  drop(event: CdkDragDrop<Todo[], Todo[],any>) {
     const reorderedTodos = [...this.todos];
     moveItemInArray(reorderedTodos, event.previousIndex, event.currentIndex);
-    this.store.dispatch(reorderTodo({ todos: reorderedTodos })); 
+    this.store.dispatch(reorderTodo({ todos: reorderedTodos }));
   }
 }

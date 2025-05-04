@@ -8,8 +8,9 @@ const moonIcon = '../assets/images/icon-moon.svg'
 const sunIcon = '../assets/images/icon-sun.svg'
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    standalone: true,
 })
 
 export class HeaderComponent implements OnInit {

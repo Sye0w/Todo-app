@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Store,select } from '@ngrx/store';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { addTodo, clearCompleted, updateTodo, reorderTodo } from '../store/todo/todo.actions'
 import { selectAllTodos, selectActiveTodos, selectCompletedTodos } from '../store/todo/todo.selectors'
 import { selectTheme } from '../store/theme/theme.selector'
 import { Todo } from '../store/todo/todo.reducer'
 import { AppState } from '../store/index'
+import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-todo',
-  templateUrl: './todo.component.html'
+    selector: 'app-todo',
+    templateUrl: './todo.component.html',
+    standalone: true,
+    imports: [FormsModule, CdkDropList, NgFor, CdkDrag, NgIf]
 })
 
 export class TodoComponent implements OnInit {

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store'
 import { selectTheme } from './store/theme/theme.selector'
 import { AppState } from './store/index'
-import { TodoComponent } from './todo/todo.component';
-import { HeaderComponent } from './header/header.component';
+import { TodoComponent } from './components/todo/todo.component';
+import { HeaderComponent } from './components/header/header.component';
 
 const DarkImg = '../assets/images/bg-desktop-dark.jpg'
 const LightImg = '../assets/images/bg-desktop-light.jpg'

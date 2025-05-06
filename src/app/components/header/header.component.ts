@@ -1,8 +1,8 @@
 import { Component,OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store'
-import { selectTheme } from '../store/theme/theme.selector'
-import { toggleTheme } from '../store/theme/theme.actions'
-import { AppState } from '../store/index'
+import { selectTheme } from '../../store/theme/theme.selector'
+import { toggleTheme } from '../../store/theme/theme.actions'
+import { AppState } from '../../store/index'
 
 const moonIcon = '../assets/images/icon-moon.svg'
 const sunIcon = '../assets/images/icon-sun.svg'

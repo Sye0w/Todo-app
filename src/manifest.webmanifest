@@ -1,6 +1,6 @@
 {
   "name": "Todo-app",
-  "short_name": "Todo",
+  "short_name": "DoBot",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

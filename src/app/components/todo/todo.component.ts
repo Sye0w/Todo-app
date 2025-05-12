@@ -1,112 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { Store,select } from '@ngrx/store';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
-import { addTodo, clearCompleted, updateTodo, reorderTodo } from '../../store/todo/todo.actions'
-import { selectAllTodos, selectActiveTodos, selectCompletedTodos } from '../../store/todo/todo.selectors'
-import { selectTheme } from '../../store/theme/theme.selector'
-import { Todo } from '../../store/todo/todo.reducer'
-import { AppState } from '../../store/index'
+import { Todo } from '../../store/todo/todo.reducer';
 import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TodoService } from '../../services/todo.service';
+import { HeaderService } from '../../services/header.service';
+import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-todo',
-    templateUrl: './todo.component.html',
-    standalone: true,
-    imports: [FormsModule, CdkDropList, NgFor, CdkDrag, NgIf]
+  selector: 'app-todo',
+  templateUrl: './todo.component.html',
+  standalone: true,
+  imports: [FormsModule, CdkDropList, NgFor, CdkDrag, NgIf]
 })
-
-export class TodoComponent implements OnInit {
+  export class TodoComponent implements OnInit, OnDestroy {
   todoInput: string = '';
-  isDarkMode: boolean;
-  sortCheck: boolean = false;
-
-  //TodoProps
-  active: boolean = true;
-  completed: boolean = false;
+  isDarkMode: boolean = false;
   todos: Todo[] = [];
-  filter: 'all' | 'active' | 'completed' = 'all';
   radioVisibility: boolean[] = [];
 
-  constructor( private store: Store<AppState>){
-    this.isDarkMode = false
-  }
+  constructor(
+    private todoService: TodoService,
+    private headerService: HeaderService
+  ) {}
 
-  ngOnInit(){
-    this.store.pipe(select(selectTheme)).subscribe(
-      (theme) => this.isDarkMode = theme
-    )
-    this.sortTodos()
+  private subscriptions: Subscription[] = [];
+  
+  get filter(): 'all' | 'active' | 'completed' {
+    return this.todoService.getCurrentFilter();
   }
-
-  //filter todos feat
-  sortTodos() {
-    switch (this.filter) {
-      case 'all':
-        this.store.pipe(select(selectAllTodos)).subscribe((allTodos) => {
-          this.todos = allTodos;
-          this.initializeRadioVisibility();
-        });
-        break;
-      case 'active':
-        this.store.pipe(select(selectActiveTodos)).subscribe((activeTodos) => {
-          this.todos = activeTodos;
-          this.initializeRadioVisibility();
-        });
-        break;
-      case 'completed':
-        this.store.pipe(select(selectCompletedTodos)).subscribe((completedTodos) => {
-          this.todos = completedTodos;
-          this.initializeRadioVisibility();
-        });
-        break;
-    }
-  }
-
+  
   initializeRadioVisibility() {
     this.radioVisibility = Array(this.todos.length).fill(false);
   }
+  
 
-  selectSort(filter: 'all' | 'active' | 'completed') {
-    this.filter = filter;
-    this.sortTodos();
+  ngOnInit() {
+    // Subscribe to theme changes
+    this.subscriptions.push(
+      this.headerService.getTheme().subscribe(
+        (theme) => this.isDarkMode = theme
+      )
+    );
+    
+    // Subscribe to filtered todos
+    this.subscriptions.push(
+      this.todoService.filteredTodos$.subscribe(todos => {
+        this.todos = todos;
+        this.initializeRadioVisibility();
+      })
+    );
   }
 
-  //store actions
-  addTodo(){
+  ngOnDestroy() {
+    // Clean up all subscriptions
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+  selectSort(filter: 'all' | 'active' | 'completed') {
+    this.todoService.setFilter(filter);
+  }
+
+  addTodo() {
     const trimmedInput = this.todoInput.trim();
-    if(!trimmedInput){
+    if (!trimmedInput) {
       return;
     }
-    this.store.dispatch(addTodo({
-      text: this.todoInput,
-      active: this.active,
-      completed: this.completed
-    }))
+    this.todoService.addTodo(trimmedInput, true, false);
     this.todoInput = '';
   }
 
-  updateTodo(todo: Todo){
-    this.store.dispatch(updateTodo({
-      id: todo.id,
-      active: !todo.active,
-      completed: !todo.completed
-    }))
+  updateTodo(todo: Todo) {
+    this.todoService.toggleTodoStatus(todo);
   }
 
-  clearCompleted(){
-    this.store.dispatch(clearCompleted())
+  clearCompleted() {
+    this.todoService.clearCompleted();
   }
 
-  //RadioGradientToggler
-  toggleRadio(i: number ) {
+  toggleRadio(i: number) {
     this.radioVisibility[i] = !this.radioVisibility[i];
   }
 
-  //drag-drop feature
-  drop(event: CdkDragDrop<Todo[], Todo[],any>) {
+  drop(event: CdkDragDrop<Todo[], Todo[], any>) {
     const reorderedTodos = [...this.todos];
     moveItemInArray(reorderedTodos, event.previousIndex, event.currentIndex);
-    this.store.dispatch(reorderTodo({ todos: reorderedTodos }));
+    this.todoService.reorderTodos(reorderedTodos);
   }
 }

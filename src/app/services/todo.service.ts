@@ -9,6 +9,7 @@ import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+
 export class TodoService {
   allTodos$: Observable<Todo[]> = this.store.pipe(select(selectAllTodos));
 

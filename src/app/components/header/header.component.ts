@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ThemeService } from '../../services/theme.service'; // Import ThemeService
+import { select, Store } from '@ngrx/store';
+import { AppState } from 'src/app/store';
+import { selectTheme } from 'src/app/store/theme/theme.selector';
+import { toggleTheme } from 'src/app/store/theme/theme.actions';
 
 const moonIcon = '../assets/images/icon-moon.svg';
 const sunIcon = '../assets/images/icon-sun.svg';

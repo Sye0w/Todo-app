@@ -5,19 +5,19 @@ const moonIcon = '../assets/images/icon-moon.svg';
 const sunIcon = '../assets/images/icon-sun.svg';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  standalone: true,
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    standalone: true,
 })
 export class HeaderComponent implements OnInit {
   isDarkMode: boolean;
 
-  constructor(private themeService: ThemeService) { 
-    this.isDarkMode = false;
+  constructor(private store: Store<AppState>){
+    this.isDarkMode = false
   }
 
   ngOnInit(): void {
-    this.themeService.isDarkMode$.subscribe((theme) => {
+    this.store.pipe(select(selectTheme)).subscribe( theme => {
       this.isDarkMode = theme;
     });
   }
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
     return this.isDarkMode ? sunIcon : moonIcon;
   }
 
-  toggleTheme() {
-    this.themeService.toggleTheme(); 
+  toggleTheme(){
+    this.store.dispatch(toggleTheme())
   }
 }

@@ -43,9 +43,9 @@
         </ng-template>
       </div>
       <div class="flex font-bold gap-4 ">
-        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'all','cursor-pointer': true }" (click)="filter = 'all'; selectSort('all')">All</h3>
-        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'active', 'cursor-pointer': true }" (click)="filter = 'active';selectSort('active')">Active</h3>
-        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'completed', 'cursor-pointer': true }" (click)="filter = 'completed'; selectSort('completed')">Completed</h3>
+        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'all','cursor-pointer': true }" (click)="selectSort('all')">All</h3>
+        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'active', 'cursor-pointer': true }" (click)="selectSort('active')">Active</h3>
+        <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'completed', 'cursor-pointer': true }" (click)="selectSort('completed')">Completed</h3>
       </div>
       <p (click)="clearCompleted()" class="cursor-pointer">Clear Completed</p>
     </div>
@@ -54,11 +54,11 @@
   <!-- Mobile view -->
   <div class="laptop:hidden shadow-xl flex justify-center p-4 text-[#9495A5] text-[0.875rem] rounded-[0.375rem]" [class]="isDarkMode ? 'bg-[#25273D]':'bg-[#fff]'">
     <div class="flex font-bold gap-4">
-      <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'all','cursor-pointer': true }" (click)="filter = 'all'; selectSort('all')">All</h3>
-      <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'active', 'cursor-pointer': true }" (click)="filter = 'active';selectSort('active')">Active</h3>
-      <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'completed', 'cursor-pointer': true }" (click)="filter = 'completed'; selectSort('completed')">Completed</h3>
+      <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'all','cursor-pointer': true }" (click)="selectSort('all')">All</h3>
+      <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'active', 'cursor-pointer': true }" (click)="selectSort('active')">Active</h3>
+      <h3 [class]="{ 'text-[#3a7cfd]' : filter === 'completed', 'cursor-pointer': true }" (click)="selectSort('completed')">Completed</h3>
     </div>
   </div>
   <p class=" mx-auto" [class]="isDarkMode ? 'text-[#5B5E7E]':'text-[#9495A5]'">Drag and drop to reorder list</p>
   <!-- Mobile view -->
-<main>
+</main>
